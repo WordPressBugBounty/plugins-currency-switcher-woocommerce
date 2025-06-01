@@ -3,7 +3,7 @@
 Plugin Name: Currency Switcher for WooCommerce
 Plugin URI: https://wpwham.com/products/currency-switcher-for-woocommerce/
 Description: Currency Switcher for WooCommerce.
-Version: 2.16.3
+Version: 2.16.4
 Author: WP Wham
 Author URI: https://wpwham.com
 Text Domain: currency-switcher-woocommerce
@@ -33,7 +33,7 @@ if ( 'currency-switcher-woocommerce.php' === basename( __FILE__ ) ) {
 }
 
 if ( ! defined( 'WPWHAM_CURRENCY_SWITCHER_VERSION' ) ) {
-	define( 'WPWHAM_CURRENCY_SWITCHER_VERSION', '2.16.3' );
+	define( 'WPWHAM_CURRENCY_SWITCHER_VERSION', '2.16.4' );
 }
 if ( ! defined( 'WPWHAM_CURRENCY_SWITCHER_DBVERSION' ) ) {
 	define( 'WPWHAM_CURRENCY_SWITCHER_DBVERSION', '2' );
@@ -55,7 +55,7 @@ if ( ! class_exists( 'Alg_WC_Currency_Switcher' ) ) :
  * Main Alg_WC_Currency_Switcher Class
  *
  * @class   Alg_WC_Currency_Switcher
- * @version 2.16.3
+ * @version 2.16.4
  * @since   1.0.0
  */
 final class Alg_WC_Currency_Switcher {
@@ -69,7 +69,7 @@ final class Alg_WC_Currency_Switcher {
 	 * @var   string
 	 * @since 1.0.0
 	 */
-	public $version = '2.16.3';
+	public $version = '2.16.4';
 
 	/**
 	 * @var   Alg_WC_Currency_Switcher The single instance of the class
@@ -97,7 +97,7 @@ final class Alg_WC_Currency_Switcher {
 	/**
 	 * Alg_WC_Currency_Switcher Constructor.
 	 *
-	 * @version 2.15.0
+	 * @version 2.16.4
 	 * @since   1.0.0
 	 * @access  public
 	 * @todo    (maybe) AJAX in admin "Currencies" settings section
@@ -108,7 +108,7 @@ final class Alg_WC_Currency_Switcher {
 	function __construct() {
 
 		// Set up localisation
-		load_plugin_textdomain( 'currency-switcher-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );		
+		add_action( 'init', array( $this, 'load_localization' ) );	
 
 		// Include required files
 		$this->includes();
@@ -128,6 +128,13 @@ final class Alg_WC_Currency_Switcher {
 		add_action( 'wc_after_products_ending_sales', array( $this, 'cleanup_ended_sales_prices' ) );
 		
 	}	
+			
+	/**
+	 * @since   2.16.4
+	 */
+	public function load_localization() {
+		load_plugin_textdomain( 'currency-switcher-woocommerce', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
+	}
 
 	/**
 	 * Show action links on the plugin screen
